@@ -6,6 +6,7 @@ const express = require("express");
 const { join } = require("path");
 const app = express();
 
+// Check the JWT 
 const checkJwt = jwt({
   secret: jwksRsa.expressJwtSecret({
     cache: true,
@@ -19,6 +20,7 @@ const checkJwt = jwt({
   algorithms: ["RS256"]
 });
 
+// Error handler
 app.use(function(err, req, res, next) {
   if (err.name === "UnauthorizedError") {
     return res.status(401).send({ msg: "Invalid token" });
@@ -27,7 +29,7 @@ app.use(function(err, req, res, next) {
   next(err, req, res);
 });
 
-
+// API call successful, order has been placed. Confirm to user.
 app.get("/api/external", checkJwt, (req, res) => {
   res.send({
     msg: "Your order has been placed and your pizza will be on its way soon!!"
@@ -48,5 +50,5 @@ app.get("/*", (_, res) => {
 });
 
 
-// Listen on port 3000
+// Listen on Heroku server or port 3000 when local
 app.listen(process.env.PORT || 3000);
