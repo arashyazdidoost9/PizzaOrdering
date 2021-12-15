@@ -31,7 +31,7 @@ app.use(function(err, req, res, next) {
 
 // API call successful, order has been placed. Confirm to user.
 app.get("/api/external", checkJwt, (req, res) => {
-  res.send(Your season tickets have been renewed. See you on the field);
+  res.send({"Your season tickets have been renewed. See you on the field!"});
 });
 
 // Serve static assets from the /public folder
